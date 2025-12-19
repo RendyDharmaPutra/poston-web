@@ -1,0 +1,19 @@
+# Dockerfile.dev
+FROM oven/bun:alpine
+
+WORKDIR /app
+
+# Copy hanya file dependency dulu
+COPY bun.lock package.json ./
+
+# Install dependencies
+RUN bun install
+
+# Copy source (akan dioverride oleh volume saat dev)
+COPY . .
+
+# Expose port Next.js dev
+EXPOSE 3000
+
+# Jalankan Next dev server
+CMD ["bun", "run", "dev"]
